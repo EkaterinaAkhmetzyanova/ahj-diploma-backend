@@ -59,7 +59,7 @@ wsServer.on('connection', (ws, req) => {
   router.post('/upload', async ctx => {
     manager.loadFiles(ctx.request.files.file).then((response) => {
       users.forEach((item) => {
-        item.sendMsg(response);
+        item.send(response);
       });
       // for (const user of users) {
       //   user.send(JSON.stringify({...response, command: 'newMessage'}))
