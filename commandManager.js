@@ -93,8 +93,8 @@ module.exports = class commandManager {
     loadFiles(file) {
         return new Promise((resolve, reject) => {
             //const fName = file.name;
-            const fType = file.type.split('/')[0];
-            let types = ['audio', 'video', 'image'];
+            let fType = file.type.split('/')[0];
+            const types = ['audio', 'video', 'image'];
             if (!types.includes(fType)) {
                 fType = 'file';
             }
