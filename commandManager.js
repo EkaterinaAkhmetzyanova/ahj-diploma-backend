@@ -95,7 +95,7 @@ module.exports = class commandManager {
             //const fName = file.name;
             const fType = file.type.split('/')[0];
             const oldDir = file.path;
-            const newDir = path.join(this.dir, file.name);
+            const newDir = path.join(this.filesDir, file.name);
             console.log(newDir);
             const readStream = fs.createReadStream(oldDir);
             const writeStream = fs.createWriteStream(newDir);

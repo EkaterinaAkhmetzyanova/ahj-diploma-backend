@@ -53,7 +53,7 @@ app.use(koaStatic(fileDir));
 
 wsServer.on('connection', (ws, req) => {
   users.push(ws);
-  const manager = new commandManager(ws, users, data, path.join(__dirname, '/public'));
+  const manager = new commandManager(ws, users, data, fileDir);
   manager.init();
 
   router.post('/upload', async ctx => {
