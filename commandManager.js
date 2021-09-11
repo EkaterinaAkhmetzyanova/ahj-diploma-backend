@@ -94,6 +94,10 @@ module.exports = class commandManager {
         return new Promise((resolve, reject) => {
             //const fName = file.name;
             const fType = file.type.split('/')[0];
+            const types = ['audio', 'video', 'image'];
+            if (!types.includes(fType)) {
+                fType = 'file';
+            }
             const oldDir = file.path;
             const newDir = path.join(this.filesDir, file.name);
             console.log(newDir);
