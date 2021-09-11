@@ -106,7 +106,7 @@ module.exports = class commandManager {
                 fs.unlink(oldDir, callback);
                 const item = {
                     id: uuid.v1(),
-                    message: null,
+                    message: file.name,
                     created: new Date().toLocaleString('ru'),
                     type: fType,
                     fileType: 'file',
