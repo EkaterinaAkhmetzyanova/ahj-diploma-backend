@@ -93,7 +93,6 @@ module.exports = class commandManager {
     loadFiles(file) {
         return new Promise((resolve, reject) => {
             //const fName = file.name;
-            console.log(file);
             const fType = file.type.split('/')[0];
             const oldDir = file.path;
             const newDir = path.join(this.dir, file.name);
@@ -114,7 +113,7 @@ module.exports = class commandManager {
                     fileFormat: file.type.split("/")[1],
                 };
                 this.data.push(item);
-                console.log(data);
+                console.log(item);
                 resolve(
                     JSON.stringify({
                         command: 'newMessage',
