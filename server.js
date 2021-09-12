@@ -47,13 +47,34 @@ const data = [
   {id: '444', message: 'Фотографии с резко похудевшим Ким Чен Ыном появились в Сети', created: new Date().toLocaleString('ru'), type: 'text'},
 ];
 
+const favorites = new Set(['345', '679']);
+
+const categories = {
+  images: [
+    {id: '345', name: 'photo.jpeg'}
+  ],
+  audio: [
+    {id: '678', name: 'DostoevskiyDvoinik01.mp3'}
+  ],
+  video: [
+    {id: '346', name: 'Ocean83621.mp4'}
+  ],
+  links: [
+    {id: '275', name: 'https://google.com'},
+    {id: '275', name: 'https://meduza.io/'},
+  ],
+  files: [
+    {id: '679', name: 'book.pdf'}
+  ],
+}
+
 const fileDir = path.join(__dirname, '/public');
 //const upload = multer();
 app.use(koaStatic(fileDir));
 
 wsServer.on('connection', (ws, req) => {
   users.push(ws);
-  const manager = new commandManager(ws, users, data, fileDir);
+  const manager = new commandManager(ws, users, data, fileDir, categories, favorites);
   manager.init();
 
   router.post('/upload', async ctx => {

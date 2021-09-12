@@ -3,12 +3,14 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports = class commandManager {
-    constructor(ws, users, data, filesDir) {
+    constructor(ws, users, data, filesDir, categories, favorites) {
       this.ws = ws;
       this.users = users;
       this.data = data;
       this.filesDir = filesDir;
       this.counter = this.data.length;
+      this.categories = categories;
+      this.favorites = favorites;
     }
 
     init() {
@@ -22,10 +24,25 @@ module.exports = class commandManager {
                   this.newMessage(message);
                   return;
               case 'msgSearch': 
-                   this.msgSearch(message);
-                   return;      
+                  this.msgSearch(message);
+                  return;  
+              case 'sendGeo':
+                  this.sendGeo(message);
+                  this.sendMsg(this.countByCategory());
+                  return;
+              case 'addFavorite':
+                  this.addFavorite(message);
+                  return;
+              case 'getCategory':
+                  this.getCategory(message);
+                  return;
+              case 'update': 
+                  this.counter = this.data.length;
+                  this.loadLatest();
+                  this.ws.send(this.countByCategory());
+                  return;
           }
-      })
+      });
     }
     
     // lazy load
@@ -65,11 +82,11 @@ module.exports = class commandManager {
           message: text,
           created: new Date().toLocaleString('ru'),
           type: type,
-          //geo
       };
       this.data.push(item);
       message.data = item;
       this.sendMsg(JSON.stringify(message));
+      this.sendMsg(this.countByCategory());
       return;
     }
 
@@ -77,6 +94,20 @@ module.exports = class commandManager {
         this.users.forEach((item) => {
             item.send(message);
         });
+        return;
+    }
+
+    sendGeo(message) {
+        const {value} = message;
+        const item = {
+            id: uuid.v1(),
+            message: value,
+            created: new Date().toLocaleString('ru'),
+            type: 'geo',
+        };
+        this.data.push(item);
+        message.data = item;
+        this.sendMsg(JSON.stringify(message));
         return;
     }
 
@@ -126,6 +157,126 @@ module.exports = class commandManager {
                 );
             });
             readStream.pipe(writeStream);
-        })
+        });
+    }
+
+    getCategory(message) {
+        if (message.data === 'images') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'image') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'audio') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'audio') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'video') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'video') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'files') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'file') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'links') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'link') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'messages') {
+            this.counter = this.data.length;
+            this.loadLatest();
+        }
+        if (message.data === 'posts') {
+            message.data = this.data.filter((item) => {
+                if (item.type === 'text') {
+                    return item;
+                }
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+        if (message.data === 'favorites') {
+            message.data = this.data.filter((item) => {
+                this.favorites.has(item.id);
+            });
+            this.ws.send(JSON.stringify(message));
+        }
+    }
+
+    countByCategory() {
+        const links = this.data.filter((item) => {
+            if (item.type === 'link') {
+                return item;
+            }
+        });
+        const audio = this.data.filter((item) => {
+            if (item.type === 'audio') {
+                return item;
+            }
+        });
+        const video = this.data.filter((item) => {
+            if (item.type === 'video') {
+                return item;
+            }
+        });
+        const images = this.data.filter((item) => {
+            if (item.type === 'image') {
+                return item;
+            }
+        });
+        const files = this.data.filter((item) => {
+            if (item.type === 'file') {
+                return item;
+            }
+        });
+        const textMsg = this.data.filter((item) => {
+            if (item.type === 'text') {
+                return item;
+            }
+        });
+        const favorites = this.data.filter((item) => {
+            if (this.favorites.has(item.id)) {
+                return item;
+            }
+        });
+        // if (links.length < 0 || audio.length < 0 || video.length < 0 || files.length < 0 || images.length < 0 || textMsg.length < 0 || favorites.length) {
+        //     return;
+        // }
+        this.categories.links = links.length;
+        this.categories.audio = audio.length;
+        this.categories.video = video.length;
+        this.categories.images = images.length;
+        this.categories.files = files.length;
+        this.categories.messages = this.data.length;
+        this.categories.posts = textMsg.lengt;
+        this.categories.favorites = favorites.length;
+    }
+
+    addFavorite(id) {
+        this.favorites.add(id);
+        this.users.forEach((item) => {
+            item.send(JSON.stringify({
+                command: 'addFavorite',
+                id: id,
+            }));
+        });
     }
 }
