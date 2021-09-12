@@ -268,6 +268,7 @@ module.exports = class commandManager {
         this.categories.messages = this.data.length;
         this.categories.posts = textMsg.lengt;
         this.categories.favorites = favorites.length;
+        return JSON.stringify({command: 'categoriesNum', data: this.categories})
     }
 
     addFavorite(id) {
