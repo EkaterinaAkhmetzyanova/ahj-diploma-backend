@@ -14,6 +14,7 @@ module.exports = class commandManager {
     }
 
     init() {
+      this.ws.send(this.countByCategory());
       this.ws.on('message', (msg) => {
           const message = JSON.parse(msg);
           switch (message.command) {
