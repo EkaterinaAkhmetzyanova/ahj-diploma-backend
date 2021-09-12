@@ -81,10 +81,8 @@ wsServer.on('connection', (ws, req) => {
     manager.loadFiles(ctx.request.files.file).then((response) => {
       users.forEach((item) => {
         item.send(response);
+        item.send(manager.countByCategory())
       });
-      // for (const user of users) {
-      //   user.send(JSON.stringify({...response, command: 'newMessage'}))
-      // }
     });
     ctx.response.status = 204;
   });
