@@ -266,7 +266,7 @@ module.exports = class commandManager {
         this.categories.images = images.length;
         this.categories.files = files.length;
         this.categories.messages = this.data.length;
-        this.categories.posts = textMsg.lengt;
+        this.categories.posts = textMsg.length;
         this.categories.favorites = favorites.length;
         return JSON.stringify({command: 'categoriesNum', data: this.categories})
     }
