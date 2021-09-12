@@ -39,12 +39,14 @@ const data = [
   {id: '275', message: 'link https://google.com https://meduza.io/', created: new Date().toLocaleString('ru'), type: 'link'},
   {id: '345', message: 'photo.jpeg', created: new Date().toLocaleString('ru'), type: 'image'},
   {id: '346', message: 'Ocean83621.mp4', created: new Date().toLocaleString('ru'), type: 'video'},
-  {id: '678', message: 'DostoevskiyDvoinik01.mp3', created: new Date().toLocaleString('ru'), type: 'audio'},
+  {id: '678', message: 'gloria-gaynor-i-will-survive.mp3', created: new Date().toLocaleString('ru'), type: 'audio'},
   {id: '679', message: 'book.pdf', created: new Date().toLocaleString('ru'), type: 'file'},
   {id: '301', message: 'text text text', created: new Date().toLocaleString('ru'), type: 'text'},
   {id: '105', message: 'Автором текста для «Тотального диктанта» в 2022 году стала писательница Марина Степнова. Для просветительской акции литератор подготовила историю, которую придумала после поездки в Воронеж на Платоновский фестиваль, сказала она во время онлайн-марафона «Русский язык: прошлое, настоящее, будущее» в среду, 8 сентября.', created: new Date().toLocaleString('ru'), type: 'text'},
   {id: '564', message: 'Главный специалист погодного центра «Фобос» Евгений Тишковец сообщил, что в Москве случится обвал полярного холода', created: new Date().toLocaleString('ru'), type: 'text'},
   {id: '444', message: 'Фотографии с резко похудевшим Ким Чен Ыном появились в Сети', created: new Date().toLocaleString('ru'), type: 'text'},
+  {id: '454', message: 'https://netology.ru', created: new Date().toLocaleString('ru'), type: 'text'},
+  {id: '754', message: '55.89660, 37.61168', created: new Date().toLocaleString('ru'), type: 'geo'},
 ];
 
 const favorites = new Set(['345', '679']);
