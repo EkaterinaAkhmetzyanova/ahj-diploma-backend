@@ -45,8 +45,7 @@ module.exports = class commandManager {
           }
       });
     }
-    
-    // lazy load
+
     loadLatest() {
        if (this.counter <= 10) {
            const latest = this.data.slice(0, this.counter);
@@ -71,12 +70,13 @@ module.exports = class commandManager {
        }
     }
     
-    // new message
     newMessage(message) {
     const {text} = message;
-      let type = 'text';
-      if (this.checkLink(message.text)) {
+    let type;
+      if (this.checkLink(text)) {
           type = 'link';
+      } else {
+        type = 'text';
       }
       const item = {
           id: uuid.v1(),
@@ -112,9 +112,15 @@ module.exports = class commandManager {
         return;
     }
 
-    msgSearch(id) {
-        const result = this.data.find((item) => item.id === id);
-        this.ws.send(JSON.stringify(result));
+    msgSearch(message) {
+        const value = message.message;
+        const founded = this.data.filter((item) => {
+            if (item.message.indexOf(value) !== 1) {
+                return item;
+            }
+        });
+        message.data = founded;
+        this.ws.send(JSON.stringify(message));
     }
 
     checkLink(string) {
