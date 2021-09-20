@@ -70,21 +70,21 @@ module.exports = class commandManager {
        }
     }
     
-    newMessage(message) {
+    newMessage(msg) {
       let type;
-      if (this.checkLink(message.message)) {
+      if (this.checkLink(msg.message)) {
           type = 'link';
       } else {
         type = 'text';
       }
       const item = {
           id: uuid.v1(),
-          message: message.message,
+          message: msg.message,
           created: new Date().toLocaleString('ru'),
           type: type,
       };
       this.data.push(item);
-      //message.data = item;
+      message.data = item;
       console.log(message);
       this.sendMsg(JSON.stringify(message));
       this.sendMsg(this.countByCategory());
@@ -98,16 +98,15 @@ module.exports = class commandManager {
         return;
     }
 
-    sendGeo(message) {
-        //const {value} = message;
+    sendGeo(msg) {
         const item = {
             id: uuid.v1(),
-            message: message.message,
+            message: msg.message,
             created: new Date().toLocaleString('ru'),
             type: 'geo',
         };
         this.data.push(item);
-       // message.data = item;
+        message.data = item;
         this.sendMsg(JSON.stringify(message));
         return;
     }
