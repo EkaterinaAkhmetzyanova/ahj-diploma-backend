@@ -85,14 +85,14 @@ module.exports = class commandManager {
       };
       this.data.push(item);
       msg.data = item;
-      this.sendMsg(JSON.stringify(msg));
+      this.sendMsg(msg);
       this.sendMsg(this.countByCategory());
       return;
     }
 
     sendMsg(message) {
         this.users.forEach((item) => {
-            item.send(message);
+            item.send(JSON.stringify(message));
         });
         return;
     }
