@@ -87,7 +87,7 @@ module.exports = class commandManager {
       this.data.push(item);
       msg.data = item;
       console.log(msg);
-      this.sendMsg(JSON.stringify({command: 'newMessage', data: msg}));
+      this.sendMsg(JSON.stringify(msg));
       this.sendMsg(this.countByCategory());
       return;
     }
@@ -109,7 +109,7 @@ module.exports = class commandManager {
         this.data.push(item);
         msg.data = item;
         console.log(msg);
-        this.sendMsg(msg);
+        this.sendMsg(JSON.stringify(msg));
         return;
     }
 
