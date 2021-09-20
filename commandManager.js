@@ -84,9 +84,8 @@ module.exports = class commandManager {
           type: type,
       };
       this.data.push(item);
-      message.data = item;
-      console.log(message);
-      this.sendMsg(JSON.stringify(message));
+      msg.data = item;
+      this.sendMsg(JSON.stringify(msg));
       this.sendMsg(this.countByCategory());
       return;
     }
@@ -106,8 +105,8 @@ module.exports = class commandManager {
             type: 'geo',
         };
         this.data.push(item);
-        message.data = item;
-        this.sendMsg(JSON.stringify(message));
+        msg.data = item;
+        this.sendMsg(JSON.stringify(msg));
         return;
     }
 
