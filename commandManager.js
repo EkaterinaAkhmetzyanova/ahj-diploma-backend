@@ -71,18 +71,19 @@ module.exports = class commandManager {
     }
     
     newMessage(message) {
-    const {text} = message;
     let type;
-      if (this.checkLink(text)) {
+      if (this.checkLink(message)) {
           type = 'link';
       } else {
         type = 'text';
       }
       const item = {
           id: uuid.v1(),
-          message: text,
-          created: new Date().toLocaleString('ru'),
-          type: type,
+          message: message,
+          data: {
+              created: new Date().toLocaleString('ru'),
+              type: type,
+          }
       };
       this.data.push(item);
       message.data = item;
