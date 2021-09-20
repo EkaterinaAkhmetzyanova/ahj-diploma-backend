@@ -83,8 +83,10 @@ module.exports = class commandManager {
           created: new Date().toLocaleString('ru'),
           type: type,
       };
+      console.log(msg.message);
       this.data.push(item);
       msg.data = item;
+      console.log(msg);
       this.sendMsg(msg);
       this.sendMsg(this.countByCategory());
       return;
