@@ -80,13 +80,14 @@ module.exports = class commandManager {
       const item = {
           id: uuid.v1(),
           message: message,
-          data: {
-              created: new Date().toLocaleString('ru'),
-              type: type,
-          }
+          created: new Date().toLocaleString('ru'),
+          type: type,
       };
       this.data.push(item);
+      console.log(this.data);
+      console.log(message.data);
       message.data = item;
+      console.log(message);
       this.sendMsg(JSON.stringify(message));
       this.sendMsg(this.countByCategory());
       return;
@@ -100,10 +101,10 @@ module.exports = class commandManager {
     }
 
     sendGeo(message) {
-        const {value} = message;
+        //const {value} = message;
         const item = {
             id: uuid.v1(),
-            message: value,
+            message: message,
             created: new Date().toLocaleString('ru'),
             type: 'geo',
         };
