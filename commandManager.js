@@ -87,14 +87,14 @@ module.exports = class commandManager {
       this.data.push(item);
       msg.data = item;
       console.log(msg);
-      this.sendMsg(msg);
+      this.sendMsg(JSON.stringify({command: 'newMessage', data: msg}));
       this.sendMsg(this.countByCategory());
       return;
     }
 
     sendMsg(message) {
         this.users.forEach((item) => {
-            item.send(JSON.stringify(message));
+            item.send(message);
         });
         return;
     }
@@ -125,7 +125,7 @@ module.exports = class commandManager {
     }
 
     checkLink(string) {
-        const link = new RegExp(/(http|https|ftp|ftps):\/\/[a-zA-Z0-9\-\\.]+\.[a-zA-Z]{2,3}(\/\S*)?/);
+        const link = new RegExp(/^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/);
         return link.test(string);
     }
 
