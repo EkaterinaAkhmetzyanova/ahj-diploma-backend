@@ -108,7 +108,8 @@ module.exports = class commandManager {
         };
         this.data.push(item);
         msg.data = item;
-        this.sendMsg(JSON.stringify(msg));
+        console.log(msg);
+        this.sendMsg(msg);
         return;
     }
 
@@ -124,7 +125,7 @@ module.exports = class commandManager {
     }
 
     checkLink(string) {
-        const link = new RegExp(/^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/);
+        const link = new RegExp(/(http|https|ftp|ftps):\/\/[a-zA-Z0-9\-\\.]+\.[a-zA-Z]{2,3}(\/\S*)?/);
         return link.test(string);
     }
 
