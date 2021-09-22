@@ -89,12 +89,12 @@ wsServer.on('connection', (ws, req) => {
     ctx.response.status = 204;
   });
 
-  ws.on('close', () => {
-    const index = users.indexOf(ws);
-    if (index !== -1) {
-      users.splice(index, 1);
-    }
-  });
+  // ws.on('close', () => {
+  //   const index = users.indexOf(ws);
+  //   if (index !== -1) {
+  //     users.splice(index, 1);
+  //   }
+  // });
 
   ws.on('error', (event) => {
     console.log(event.code, event.reason);
