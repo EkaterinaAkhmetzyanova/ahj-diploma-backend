@@ -90,7 +90,7 @@ wsServer.on('connection', (ws, req) => {
   });
 
   ws.on('close', (event) => {
-    console.log(event.code, event.reason);
+    console.log(`Disconnected - ${event.code} - ${event.reason}`);
   });
 
   ws.on('error', (event) => {
