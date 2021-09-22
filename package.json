@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "forever server.js",
-    "watch": "forever -w server.js"
+    "start": "forever --minUptime 1000 --spinSleepTime 1000 server.js",
+    "watch": "forever --minUptime 1000 --spinSleepTime 1000 -w server.js"
   },
   "engines": {
     "node": "14.17.6"
