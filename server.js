@@ -89,6 +89,10 @@ wsServer.on('connection', (ws, req) => {
     ctx.response.status = 204;
   });
 
+  ws.on('close', (event) => {
+    console.log(event.code, event.reason);
+  });
+
   ws.on('error', (event) => {
     console.log(event.code, event.reason);
   })
